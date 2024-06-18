@@ -1,0 +1,71 @@
+<!-- Estendemos do template base -->
+{% extends "cadastro/_layouts/base.html" %}
+
+<!-- Bloco que define o <title></title> da nossa página -->
+{% block title %}Tipo de Reunião{% endblock %}
+
+{% load primeira_letra %}
+
+<!-- Bloco de conteúdo da nossa página -->
+{% block conteudo %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Lista de Tipos de Reuniões</h5>
+
+          {% if tiposreunioes|length > 0 %}
+            <p class="card-text">
+              Aqui está a lista de <code>Tipos de Reuniões</code> cadastradas.
+            </p>
+
+            <table class="table">
+              <thead class="thead-dark">
+              <tr>
+                <th></th>
+                <th>Sigla</th>
+                <th>Descrição</th>
+                <th>Status</th>
+                <th>Data Atualização</th>
+                <th>&nbsp;</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              {% for tiporeuniao in tiposreunioes %}
+                <tr>
+                  <td>{{ tiporeuniao.descricao|primeira_letra }}</td>
+                  <td>{{ tiporeuniao.sigla }}</td>
+                  <td>{{ tiporeuniao.descricao }}</td>
+                  <td>{{ tiporeuniao.Ativo }}</td>
+                  <td>{{ tiporeuniao.data_atualizacao|date:'d/m/Y H:i' }}</td>
+                  <td>
+                    <a href="{% url 'tiporeuniao_edita' pk=tiporeuniao.id %}"
+                       class="btn btn-info">
+                      Atualizar
+                    </a>
+                    <a href="{% url 'tiporeuniao_excluir' pk=tiporeuniao.id %}"
+                      class="btn btn-outline-danger">
+                        Excluir
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        {% else %}
+          <div class="text-center mt-5 mb-5 jumbotron">
+            <h5>Nenhum <code>Tipo de Reunião</code> cadastrado ainda.</h5>
+          </div>
+        {% endif %}
+          <hr />
+          <div class="text-right">
+            <a href="{% url 'tiporeuniao_insere' %}" class="btn btn-primary">Cadastrar Tipo de Reunião</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

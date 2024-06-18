@@ -1,0 +1,58 @@
+<!-- Estendemos do template base -->
+{% extends "cadastro/_layouts/base.html" %}
+
+<!-- Bloco que define o <title></title> da nossa página -->
+{% block title %}Página Inicial - DACP{% endblock %}
+
+{% block conteudo %}
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Departamento de Apoio às Comissões Permanentes</h4>
+                <br />
+                <p>Sistema para cadastrar as Comissões, Processos e Projetos de Lei.</p>
+                <p>Por enquanto é apenas um teste em Django.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cadastros</h5>
+              <p class="card-text">
+                Básicos
+              </p>
+              <p class="card-text">
+                <input type="button" name="btnDeputados" value="Deputados" onclick="location.href='/deputadolista';">
+                <input type="button" name="btnComissoes" value="Comissões (função)" onclick="location.href='/comissaolista';">
+                <input type="button" name="btnComissoes" value="Comissões (Classe)" onclick="location.href='/comissoes';">
+                <input type="button" name="btnTipoReuniao" value="Tipos de Reunião" onclick="location.href='/tiporeuniaolista';">
+              </p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Controles</h5>
+              <p class="card-text">
+                Projetos de Lei
+              </p>
+              <p class="card-text">
+                <input type="button" name="btnProjetos" value="Projetos">
+                <input type="button" name="btnTramitacoes" value="Tramitações">
+              </p>
+              <p class="card-text">
+                Reuniões
+              </p>
+              <p class="card-text">
+                <input type="button" name="btnControleReunioes" value="Controle de Reuniões">
+              </p>
+            </div>
+          </div>
+
+       </div>
+      </div>
+    </div>
+
+{% endblock %}
