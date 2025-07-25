@@ -18,6 +18,7 @@ class ControleReuniaoCreateView(CreateView):
     def get_queryset(self):
         return ControleReuniao.objects.filter(comissao_id=self.kwargs['pk'])
 
+
 class ControleReunioesListView(ListView):
     template_name = "cadastro/controlereuniao_listagem.html"
     model = ControleReuniao
@@ -46,6 +47,7 @@ class TramitacaoListView(ListView):
     def get_queryset(self):
         return Tramitacao.objects.filter(projeto_id=self.kwargs['pk'])
 
+
 class TramitacaoDeleteView(DeleteView):
     template_name = "cadastro/tramitacao_excluir.html"
     model = Tramitacao
@@ -61,6 +63,7 @@ class ProjetoListView(ListView):
     #ordering = ['descricao']
     context_object_name = "projetos"
 
+
 class ProjetoCreateView(CreateView):
     template_name = "cadastro/projeto_insere.html"
     model = Projeto
@@ -69,6 +72,7 @@ class ProjetoCreateView(CreateView):
     form_class = ProjetoForm
     success_url = reverse_lazy("lista_projetos")
 
+
 class ProjetoUpdateView(UpdateView):
     template_name = "cadastro/projeto_edita.html"
     model = Projeto
@@ -76,6 +80,7 @@ class ProjetoUpdateView(UpdateView):
     context_object_name = 'projeto'
     form_class = ProjetoForm
     success_url = reverse_lazy("lista_projetos")
+
 
 class ProjetoDeleteView(DeleteView):
     template_name = "cadastro/projeto_excluir.html"
@@ -92,6 +97,7 @@ class TipoReuniaoListView(ListView):
     #ordering = ['descricao']
     context_object_name = "tiposreunioes"
 
+
 class TipoReuniaoCreateView(CreateView):
     template_name = "cadastro/tiporeuniao_insere.html"
     model = TipoReuniao
@@ -100,6 +106,7 @@ class TipoReuniaoCreateView(CreateView):
     form_class = TipoReuniaoForm
     success_url = reverse_lazy("lista_tiposreunioes")
 
+
 class TipoReuniaoUpdateView(UpdateView):
     template_name = "cadastro/tiporeuniao_edita.html"
     model = TipoReuniao
@@ -107,6 +114,7 @@ class TipoReuniaoUpdateView(UpdateView):
     context_object_name = 'tiporeuniao'
     form_class = TipoReuniaoForm
     success_url = reverse_lazy("lista_tiposreunioes")
+
 
 class TipoReuniaoDeleteView(DeleteView):
     template_name = "cadastro/tiporeuniao_excluir.html"
@@ -123,12 +131,14 @@ class ComissaoListView(ListView):
     #ordering = ['descricao']
     context_object_name = "comissoes"
 
+
 class ComissaoDeleteView(DeleteView):
     template_name = "cadastro/comissao_excluir.html"
     model = Comissao
     fields = '__all__'
     context_object_name = 'comissao'
     success_url = reverse_lazy("lista_comissoes")
+
 
 class ComissaoCreateView(CreateView):
     template_name = "cadastro/comissao_insere.html"
@@ -137,6 +147,7 @@ class ComissaoCreateView(CreateView):
     context_object_name = 'comissao'
     form_class = ComissaoForm
     success_url = reverse_lazy("lista_comissoes")
+
 
 class ComissaoUpdateView(UpdateView):
     template_name = "cadastro/comissao_edita.html"
@@ -151,6 +162,7 @@ class DeputadoListView(ListView):
     template_name = "cadastro/deputado_listagem.html"
     model = Deputado
     context_object_name = "deputados"
+
 
 class DeputadoCreateView(CreateView):
     template_name = "cadastro/deputado_ficha.html"
@@ -169,6 +181,7 @@ class DeputadoCreateView(CreateView):
 
         return context
 
+
 class DeputadoUpdateView(UpdateView):
     template_name = "cadastro/deputado_ficha.html"
     model = Deputado
@@ -184,6 +197,7 @@ class DeputadoUpdateView(UpdateView):
         context['botao'] = "Atualizar"
 
         return context
+
 
 class DeputadoDeleteView(DeleteView):
     template_name = "cadastro/deputado_excluir.html"
@@ -232,6 +246,7 @@ def comissao_edita1(request, comissao_id):
     return render(request, 'cadastro/comissao_edita.html', context)
         #return HttpResponse("Essa é a pergunta de número %s" % comissao_id)
 
+
 def comissao_lista(request):
     comissoes = Comissao.objects.order_by("descricao")
     context = {'comissoes': comissoes}
@@ -249,12 +264,10 @@ def deputado_lista(request):
 
 
 
-
-
-
 def results(request, qual_id):
     response = "Esses são os resultados ....%s" % qual_id
     return HttpResponse(response)
+
 
 def vote(request, qual_id):
     return HttpResponse("você está votando no número %s" % qual_id)

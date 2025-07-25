@@ -36,6 +36,7 @@ class Deputado(models.Model):
     def somente_inativos(self):
         return self.ativo == False
 
+
 class Comissao(models.Model):
     descricao = models.CharField(max_length=200)
     data_atualizacao = models.DateTimeField('Data Atualização', default=timezone.now)
@@ -58,6 +59,7 @@ class Comissao(models.Model):
             return "Ativo"
         else:
             return "Inativo"
+
 
 class TipoReuniao(models.Model):
     sigla = models.CharField(max_length=10, default=None)
@@ -83,6 +85,7 @@ class TipoReuniao(models.Model):
     def somente_inativos(self):
         return self.ativo == False
 
+
 class Projeto(models.Model):
     ano = models.IntegerField(null=False, blank=False)
     numero = models.IntegerField(null=False, blank=False)
@@ -96,6 +99,7 @@ class Projeto(models.Model):
 
     def __str__(self):
         return str(self.numero) + "/" + str(self.ano)
+
 
 class Tramitacao(models.Model):
     PERGUNTA_CHOICES = (
@@ -119,6 +123,7 @@ class Tramitacao(models.Model):
 
     def __str__(self):
         return str(self.projeto) + "/" + str(self.comissao)
+
 
 class ControleReuniao(models.Model):
     PERGUNTA_CHOICES = (
