@@ -1,17 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LOGIN</title>
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
+<!-- Estendemos do template base -->
+{% extends "cadastro/_layouts/base_logout.html" %}
 
-        {{ form }}
+{% load widget_tweaks %}
 
-        <button type="submit">Fazer login</button>
-    </form>
+<!-- Bloco que define o <title></title> da nossa página -->
+{% block title %}Login{% endblock %}
 
-</body>
-</html>
+{% block conteudo %}
+
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-items-center">
+          <img src="/static/website/img/logo_Alerj_2021_azul_vertical.png" width="180px"><br />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Acesso ao Sistema</h5>
+              <p class="card-text">
+                Digite o seu <code>Usuário</code> e a sua <code>Senha</code> para ter acesso.
+              </p>
+              <form method="post">
+                <!-- Não se esqueça dessa tag -->
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button class="btn btn-primary">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

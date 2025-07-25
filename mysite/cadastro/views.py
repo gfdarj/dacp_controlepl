@@ -52,7 +52,8 @@ class ControleReunioesComissaoListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Comissao.objects.filter(ativo=True)
 
-###########################
+
+#### Tramitacao #######################
 
 class TramitacaoListView(LoginRequiredMixin, ListView):
     template_name = "cadastro/tramitacao/tramitacao_listagem.html"
@@ -70,7 +71,16 @@ class TramitacaoDeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'tramitacao'
     success_url = reverse_lazy("lista_tramitacoes")
 
-###########################
+
+class TramitacaoCreateView(LoginRequiredMixin, CreateView):
+    template_name = "cadastro/tramitacao/tramitacao_insere.html"
+    model = Tramitacao
+    fields = '__all__'
+    context_object_name = 'tramitacao'
+    success_url = reverse_lazy("lista_tramitacoes")
+
+
+#### Projeto #######################
 
 class ProjetoListView(LoginRequiredMixin, ListView):
     template_name = "cadastro/projeto/projeto_listagem.html"

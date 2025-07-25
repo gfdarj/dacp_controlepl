@@ -9,17 +9,18 @@ from .views import TemplateView, ComissaoListView, ComissaoUpdateView, ComissaoC
     ProjetoListView, ProjetoCreateView, ProjetoUpdateView, ProjetoDeleteView, \
     TramitacaoListView, TramitacaoDeleteView, \
     ControleReunioesListView, ControleReunioesComissaoListView, ControleReuniaoCreateView, CadastroLoginView, \
-    DashboardView, CadastroLogoutView
+    DashboardView, CadastroLogoutView, TramitacaoCreateView
 
 appname = "cadastro_um"
 
 urlpatterns = [
     #path('', views.index, name='index'),
-    path('', TemplateView.as_view(template_name="cadastro/index.html"), name='index'),
+    #path('', TemplateView.as_view(template_name="cadastro/index.html"), name='index'),
 
 
     #login
     path('login/', CadastroLoginView.as_view(), name='login'),
+    path('', DashboardView.as_view(), name='dashboard'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('logout/', CadastroLogoutView.as_view(), name='logout'),
 
@@ -47,6 +48,7 @@ urlpatterns = [
 
     path('tramitacoes/<int:pk>', TramitacaoListView.as_view(), name="lista_tramitacoes"),  # LISTA
     path('tramitacaoexcluir/<int:pk>', TramitacaoDeleteView.as_view(), name='tramitacao_excluir'),  # EXCLUI
+    path('tramitacaoinsere/', TramitacaoCreateView.as_view(), name='tramitacao_insere'),  # INSERE
 
     path('reunioescomissao/', ControleReunioesComissaoListView.as_view(), name="lista_controlereunioes_comissao"),  # LISTA
     path('controlereunioes/<int:pk>', ControleReunioesListView.as_view(), name="lista_controlereunioes"),  # LISTA

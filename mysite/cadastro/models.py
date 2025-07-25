@@ -87,10 +87,21 @@ class TipoReuniao(models.Model):
 
 
 class Projeto(models.Model):
+    PERGUNTA_CHOICES = (
+        ("S", "Sim"),
+        ("N", "Não"),
+    )
     ano = models.IntegerField(null=False, blank=False)
     numero = models.IntegerField(null=False, blank=False)
     ementa = models.CharField(max_length=2000)
     autor = models.ForeignKey(Deputado, on_delete=models.PROTECT, related_name='autor_projeto', default=None)
+    relator = models.ForeignKey(Deputado, on_delete=models.PROTECT, related_name='relator_projeto', default=None, blank=True, null=True)
+    observacao = models.CharField(max_length=2000, default=None)
+    tem_parecer = models.BooleanField(default=False)
+    reuniao = models.IntegerField(default=None)
+    esta_na_comissao = models.CharField(choices=PERGUNTA_CHOICES, max_length=1, default="N")
+    parecer_notes = models.CharField(choices=PERGUNTA_CHOICES, max_length=1, default="N")
+    numero_lei = models.CharField(max_length=50, blank=None, null=True)
     data_atualizacao = models.DateTimeField('Data Atualização', default=timezone.now)
 
     class Meta:
@@ -102,20 +113,11 @@ class Projeto(models.Model):
 
 
 class Tramitacao(models.Model):
-    PERGUNTA_CHOICES = (
-        ("S", "Sim"),
-        ("N", "Não"),
-    )
     projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
     comissao = models.ForeignKey(Comissao, on_delete=models.PROTECT)
-    relator = models.ForeignKey(Deputado, on_delete=models.PROTECT, related_name='relator_projeto', default=None, blank=True, null=True)
+    descricao = models.CharField(max_length=2000, default=None)
     data_tramitacao = models.DateTimeField('Data Tramitação', default=timezone.now)
-    tem_parecer = models.BooleanField(default=False)
-    reuniao = models.IntegerField(default=None)
     observacao = models.CharField(max_length=2000, default=None)
-    esta_na_comissao = models.CharField(choices=PERGUNTA_CHOICES, max_length=1)
-    parecer_notes = models.CharField(choices=PERGUNTA_CHOICES, max_length=1)
-    numero_lei = models.CharField(max_length=50, blank=None, null=True)
     data_atualizacao = models.DateTimeField('Data Atualização', default=timezone.now)
 
     class Meta:

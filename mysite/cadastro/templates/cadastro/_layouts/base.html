@@ -22,7 +22,7 @@
               <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
                       <a class="nav-link"
-                        href="{% url 'index' %}">
+                        href="{% url 'dashboard' %}">
                           Principal
                       </a>
                   </li>
@@ -60,6 +60,10 @@
                       <a class="nav-link" href="#">
                         <b>Hora: </b>{% tempo_atual %}
                       </a>
+                  </li>
+                  <li class="nav-item">
+                      <!-- Aqui está nosso filtro -->
+                      <a class="nav-link" href="{% url 'logout' %}"><b>Sair</b></a>
                   </li>
               </ul>
           </div>
