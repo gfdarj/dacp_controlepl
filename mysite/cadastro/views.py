@@ -1,15 +1,30 @@
+from django.contrib.auth.decorators import login_required  #testa o login nas funcoes
+from django.contrib.auth.mixins import LoginRequiredMixin #testa o login nas views
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView, TemplateView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .forms import ComissaoForm, DeputadoForm, TipoReuniaoForm, ProjetoForm, ControleReuniaoForm
 from .models import Comissao, Deputado, TipoReuniao, Projeto, Tramitacao, ControleReuniao
 
 # Create your views here.
+class CadastroLoginView(LoginView):
+    template_name = "cadastro/login.html"
+    success_url = reverse_lazy("dashboard")
+    redirect_authenticated_user = True
 
 
-class ControleReuniaoCreateView(CreateView):
-    template_name = "cadastro/controlereuniao_insere.html"
+class CadastroLogoutView(LogoutView):
+    template_name = "cadastro/logout.html"
+
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = "cadastro/dashboard.html"
+
+
+class ControleReuniaoCreateView(LoginRequiredMixin, CreateView):
+    template_name = "cadastro/controlereuniao/controlereuniao_insere.html"
     model = ControleReuniao
     context_object_name = 'projeto'
     form_class = ControleReuniaoForm
@@ -19,8 +34,8 @@ class ControleReuniaoCreateView(CreateView):
         return ControleReuniao.objects.filter(comissao_id=self.kwargs['pk'])
 
 
-class ControleReunioesListView(ListView):
-    template_name = "cadastro/controlereuniao_listagem.html"
+class ControleReunioesListView(LoginRequiredMixin, ListView):
+    template_name = "cadastro/controlereuniao/controlereuniao_listagem.html"
     model = ControleReuniao
     context_object_name = "controlereunioes"
     # paginate_by = 10
@@ -29,8 +44,8 @@ class ControleReunioesListView(ListView):
         return ControleReuniao.objects.filter(comissao_id=self.kwargs['pk'])
 
 
-class ControleReunioesComissaoListView(ListView):
-    template_name = "cadastro/comissao_listagem_controlereuniao.html"
+class ControleReunioesComissaoListView(LoginRequiredMixin, ListView):
+    template_name = "cadastro/comissao/comissao_listagem_controlereuniao.html"
     model = Comissao
     context_object_name = "comissoes"
 
@@ -39,8 +54,8 @@ class ControleReunioesComissaoListView(ListView):
 
 ###########################
 
-class TramitacaoListView(ListView):
-    template_name = "cadastro/tramitacao_listagem.html"
+class TramitacaoListView(LoginRequiredMixin, ListView):
+    template_name = "cadastro/tramitacao/tramitacao_listagem.html"
     model = Tramitacao
     context_object_name = "tramitacoes"
 
@@ -48,8 +63,8 @@ class TramitacaoListView(ListView):
         return Tramitacao.objects.filter(projeto_id=self.kwargs['pk'])
 
 
-class TramitacaoDeleteView(DeleteView):
-    template_name = "cadastro/tramitacao_excluir.html"
+class TramitacaoDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "cadastro/tramitacao/tramitacao_excluir.html"
     model = Tramitacao
     fields = '__all__'
     context_object_name = 'tramitacao'
@@ -57,15 +72,15 @@ class TramitacaoDeleteView(DeleteView):
 
 ###########################
 
-class ProjetoListView(ListView):
-    template_name = "cadastro/projeto_listagem.html"
+class ProjetoListView(LoginRequiredMixin, ListView):
+    template_name = "cadastro/projeto/projeto_listagem.html"
     model = Projeto
     #ordering = ['descricao']
     context_object_name = "projetos"
 
 
-class ProjetoCreateView(CreateView):
-    template_name = "cadastro/projeto_insere.html"
+class ProjetoCreateView(LoginRequiredMixin, CreateView):
+    template_name = "cadastro/projeto/projeto_insere.html"
     model = Projeto
     #fields = '__all__'
     context_object_name = 'projeto'
@@ -73,8 +88,8 @@ class ProjetoCreateView(CreateView):
     success_url = reverse_lazy("lista_projetos")
 
 
-class ProjetoUpdateView(UpdateView):
-    template_name = "cadastro/projeto_edita.html"
+class ProjetoUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "cadastro/projeto/projeto_edita.html"
     model = Projeto
     #fields = '__all__'
     context_object_name = 'projeto'
@@ -82,8 +97,8 @@ class ProjetoUpdateView(UpdateView):
     success_url = reverse_lazy("lista_projetos")
 
 
-class ProjetoDeleteView(DeleteView):
-    template_name = "cadastro/projeto_excluir.html"
+class ProjetoDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "cadastro/projeto/projeto_excluir.html"
     model = Projeto
     fields = '__all__'
     context_object_name = 'projeto'
@@ -91,15 +106,15 @@ class ProjetoDeleteView(DeleteView):
 
 ###########################################################################################################
 
-class TipoReuniaoListView(ListView):
-    template_name = "cadastro/tiporeuniao_listagem.html"
+class TipoReuniaoListView(LoginRequiredMixin, ListView):
+    template_name = "cadastro/tiporeuniao/tiporeuniao_listagem.html"
     model = TipoReuniao
     #ordering = ['descricao']
     context_object_name = "tiposreunioes"
 
 
-class TipoReuniaoCreateView(CreateView):
-    template_name = "cadastro/tiporeuniao_insere.html"
+class TipoReuniaoCreateView(LoginRequiredMixin, CreateView):
+    template_name = "cadastro/tiporeuniao/tiporeuniao_insere.html"
     model = TipoReuniao
     #fields = '__all__'
     context_object_name = 'tiporeuniao'
@@ -107,8 +122,8 @@ class TipoReuniaoCreateView(CreateView):
     success_url = reverse_lazy("lista_tiposreunioes")
 
 
-class TipoReuniaoUpdateView(UpdateView):
-    template_name = "cadastro/tiporeuniao_edita.html"
+class TipoReuniaoUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "cadastro/tiporeuniao/tiporeuniao_edita.html"
     model = TipoReuniao
     #fields = '__all__'
     context_object_name = 'tiporeuniao'
@@ -116,8 +131,8 @@ class TipoReuniaoUpdateView(UpdateView):
     success_url = reverse_lazy("lista_tiposreunioes")
 
 
-class TipoReuniaoDeleteView(DeleteView):
-    template_name = "cadastro/tiporeuniao_excluir.html"
+class TipoReuniaoDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "cadastro/tiporeuniao/tiporeuniao_excluir.html"
     model = TipoReuniao
     fields = '__all__'
     context_object_name = 'tiporeuniao'
@@ -125,23 +140,23 @@ class TipoReuniaoDeleteView(DeleteView):
 
 ###########################
 
-class ComissaoListView(ListView):
-    template_name = "cadastro/comissao_listagem.html"
+class ComissaoListView(LoginRequiredMixin, ListView):
+    template_name = "cadastro/comissao/comissao_listagem.html"
     model = Comissao
     #ordering = ['descricao']
     context_object_name = "comissoes"
 
 
-class ComissaoDeleteView(DeleteView):
-    template_name = "cadastro/comissao_excluir.html"
+class ComissaoDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "cadastro/comissao/comissao_excluir.html"
     model = Comissao
     fields = '__all__'
     context_object_name = 'comissao'
     success_url = reverse_lazy("lista_comissoes")
 
 
-class ComissaoCreateView(CreateView):
-    template_name = "cadastro/comissao_insere.html"
+class ComissaoCreateView(LoginRequiredMixin, CreateView):
+    template_name = "cadastro/comissao/comissao_insere.html"
     model = Comissao
     #fields = '__all__'
     context_object_name = 'comissao'
@@ -149,8 +164,8 @@ class ComissaoCreateView(CreateView):
     success_url = reverse_lazy("lista_comissoes")
 
 
-class ComissaoUpdateView(UpdateView):
-    template_name = "cadastro/comissao_edita.html"
+class ComissaoUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "cadastro/comissao/comissao_edita.html"
     model = Comissao
     fields = '__all__'
     context_object_name = 'comissao'
@@ -158,14 +173,14 @@ class ComissaoUpdateView(UpdateView):
 
 ###########################
 
-class DeputadoListView(ListView):
-    template_name = "cadastro/deputado_listagem.html"
+class DeputadoListView(LoginRequiredMixin, ListView):
+    template_name = "cadastro/deputado/deputado_listagem.html"
     model = Deputado
     context_object_name = "deputados"
 
 
-class DeputadoCreateView(CreateView):
-    template_name = "cadastro/deputado_ficha.html"
+class DeputadoCreateView(LoginRequiredMixin, CreateView):
+    template_name = "cadastro/deputado/deputado_ficha.html"
     model = Deputado
     #fields = '__all__'
     context_object_name = 'deputado'
@@ -182,8 +197,8 @@ class DeputadoCreateView(CreateView):
         return context
 
 
-class DeputadoUpdateView(UpdateView):
-    template_name = "cadastro/deputado_ficha.html"
+class DeputadoUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "cadastro/deputado/deputado_ficha.html"
     model = Deputado
     fields = '__all__'
     context_object_name = 'deputado'
@@ -199,8 +214,8 @@ class DeputadoUpdateView(UpdateView):
         return context
 
 
-class DeputadoDeleteView(DeleteView):
-    template_name = "cadastro/deputado_excluir.html"
+class DeputadoDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "cadastro/deputado/deputado_excluir.html"
     model = Deputado
     fields = '__all__'
     context_object_name = 'deputado'
@@ -222,6 +237,7 @@ class DeputadoDeleteView(DeleteView):
 
 ###########################
 
+@login_required
 def comissao_edita(request, pk):
     if request.method == "POST":
         form = ComissaoForm(request.POST)
@@ -230,45 +246,50 @@ def comissao_edita(request, pk):
     else:
         comissao = Comissao.objects.get(pk=pk)
         form = ComissaoForm(instance=comissao)
-    return render(request, 'cadastro/comissao_edita.html', {'form': form})
+    return render(request, 'cadastro/comissao/comissao_edita.html', {'form': form})
 
 
 
 ###########################
 
-
+@login_required
 def comissao_edita1(request, comissao_id):
     if request.method == 'POST':
         return HttpResponse("Salvou %s" % comissao_id)
     else:
         comissao = Comissao.objects.filter(id=comissao_id)
         context = {'comissao': comissao}
-    return render(request, 'cadastro/comissao_edita.html', context)
+    return render(request, 'cadastro/comissao/comissao_edita.html', context)
         #return HttpResponse("Essa é a pergunta de número %s" % comissao_id)
 
 
+@login_required
 def comissao_lista(request):
     comissoes = Comissao.objects.order_by("descricao")
     context = {'comissoes': comissoes}
-    return render(request, 'cadastro/comissao_listagem.html', context)
+    return render(request, 'cadastro/comissao/comissao_listagem.html', context)
 
 
 
+@login_required
 def deputado_edita(request, deputado_id):
     return HttpResponse("Essa é a pergunta de número %s" % deputado_id)
 
+
+@login_required
 def deputado_lista(request):
     deputados = Deputado.objects.order_by("nome")
     context = {'deputados': deputados}
-    return render(request, 'cadastro/deputado_listagem.html', context)
+    return render(request, 'cadastro/deputado/deputado_listagem.html', context)
 
 
-
+@login_required
 def results(request, qual_id):
     response = "Esses são os resultados ....%s" % qual_id
     return HttpResponse(response)
 
 
+@login_required
 def vote(request, qual_id):
     return HttpResponse("você está votando no número %s" % qual_id)
 
@@ -283,3 +304,4 @@ def vote(request, qual_id):
 #    return render(request, 'cadastro/index.html')
 
 ###########################
+

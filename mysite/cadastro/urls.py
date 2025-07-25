@@ -1,18 +1,27 @@
+from tkinter.font import names
+
 from django.urls import path
 
 from . import views
 from .views import TemplateView, ComissaoListView, ComissaoUpdateView, ComissaoCreateView, ComissaoDeleteView, \
-            DeputadoListView, DeputadoCreateView, DeputadoUpdateView, DeputadoDeleteView, \
-            TipoReuniaoListView, TipoReuniaoCreateView, TipoReuniaoDeleteView, TipoReuniaoUpdateView, \
-            ProjetoListView, ProjetoCreateView, ProjetoUpdateView, ProjetoDeleteView, \
-            TramitacaoListView, TramitacaoDeleteView, \
-            ControleReunioesListView, ControleReunioesComissaoListView, ControleReuniaoCreateView
+    DeputadoListView, DeputadoCreateView, DeputadoUpdateView, DeputadoDeleteView, \
+    TipoReuniaoListView, TipoReuniaoCreateView, TipoReuniaoDeleteView, TipoReuniaoUpdateView, \
+    ProjetoListView, ProjetoCreateView, ProjetoUpdateView, ProjetoDeleteView, \
+    TramitacaoListView, TramitacaoDeleteView, \
+    ControleReunioesListView, ControleReunioesComissaoListView, ControleReuniaoCreateView, CadastroLoginView, \
+    DashboardView, CadastroLogoutView
 
 appname = "cadastro_um"
 
 urlpatterns = [
     #path('', views.index, name='index'),
     path('', TemplateView.as_view(template_name="cadastro/index.html"), name='index'),
+
+
+    #login
+    path('login/', CadastroLoginView.as_view(), name='login'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    path('logout/', CadastroLogoutView.as_view(), name='logout'),
 
     # LISTA DE COMISSOES
     #path('comissaolista/', views.comissao_lista, name='comissao_lista'),            # LISTA
