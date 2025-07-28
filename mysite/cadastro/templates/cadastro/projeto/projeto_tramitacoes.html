@@ -1,0 +1,25 @@
+<!-- Estendemos do template base -->
+{% extends "cadastro/_layouts/base.html" %}
+
+{% load widget_tweaks %}
+
+<!-- Bloco que define o <title></title> da nossa página -->
+{% block title %}Projeto{% endblock %}
+
+{% block conteudo %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form1 }}
+    <input type="submit" class="btn btn-info" value="Salvar Projeto">
+</form>
+
+<hr>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form2 }}
+    <input type="submit" class="btn btn-info" value="Salvar Tramitação">
+</form>
+
+{% endblock %}

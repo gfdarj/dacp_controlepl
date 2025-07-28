@@ -96,11 +96,11 @@ class Projeto(models.Model):
     ementa = models.CharField(max_length=2000)
     autor = models.ForeignKey(Deputado, on_delete=models.PROTECT, related_name='autor_projeto', default=None)
     relator = models.ForeignKey(Deputado, on_delete=models.PROTECT, related_name='relator_projeto', default=None, blank=True, null=True)
-    observacao = models.CharField(max_length=2000, default=None)
-    tem_parecer = models.BooleanField(default=False)
-    reuniao = models.IntegerField(default=None)
-    esta_na_comissao = models.CharField(choices=PERGUNTA_CHOICES, max_length=1, default="N")
-    parecer_notes = models.CharField(choices=PERGUNTA_CHOICES, max_length=1, default="N")
+    observacao = models.CharField(max_length=2000, default=None, null=True)
+    tem_parecer = models.BooleanField(default=False, null=True)
+    reuniao = models.IntegerField(default=None, null=True)
+    esta_na_comissao = models.CharField(choices=PERGUNTA_CHOICES, max_length=1, default="N", null=True)
+    parecer_notes = models.CharField(choices=PERGUNTA_CHOICES, max_length=1, default="N", null=True)
     numero_lei = models.CharField(max_length=50, blank=None, null=True)
     data_atualizacao = models.DateTimeField('Data Atualização', default=timezone.now)
 
@@ -114,10 +114,10 @@ class Projeto(models.Model):
 
 class Tramitacao(models.Model):
     projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
-    comissao = models.ForeignKey(Comissao, on_delete=models.PROTECT)
+    comissao = models.ForeignKey(Comissao, on_delete=models.PROTECT, null=True)
     descricao = models.CharField(max_length=2000, default=None)
     data_tramitacao = models.DateTimeField('Data Tramitação', default=timezone.now)
-    observacao = models.CharField(max_length=2000, default=None)
+    observacao = models.CharField(max_length=2000, default=None, null=True)
     data_atualizacao = models.DateTimeField('Data Atualização', default=timezone.now)
 
     class Meta:

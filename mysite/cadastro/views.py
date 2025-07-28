@@ -5,7 +5,7 @@ from django.views.generic import ListView, UpdateView, CreateView, DeleteView, T
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .forms import ComissaoForm, DeputadoForm, TipoReuniaoForm, ProjetoForm, ControleReuniaoForm
+from .forms import ComissaoForm, DeputadoForm, TipoReuniaoForm, ProjetoForm, ControleReuniaoForm, TramitacaoForm
 from .models import Comissao, Deputado, TipoReuniao, Projeto, Tramitacao, ControleReuniao
 
 # Create your views here.
@@ -92,9 +92,9 @@ class ProjetoListView(LoginRequiredMixin, ListView):
 class ProjetoCreateView(LoginRequiredMixin, CreateView):
     template_name = "cadastro/projeto/projeto_insere.html"
     model = Projeto
-    #fields = '__all__'
     context_object_name = 'projeto'
     form_class = ProjetoForm
+    #fields = '__all__'
     success_url = reverse_lazy("lista_projetos")
 
 
@@ -114,7 +114,18 @@ class ProjetoDeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'projeto'
     success_url = reverse_lazy("lista_projetos")
 
-###########################################################################################################
+@login_required()
+def ProjetoTramitacoes(request, pk):
+    projeto = Projeto.objects.get(pk=pk)
+    form_proj = ProjetoForm(instance=projeto)
+    tramitacao = Tramitacao
+    #tramitacao = Tramitacao.objects.filter(projeto=int(pk))
+    form_tram = TramitacaoForm(instance=tramitacao)
+
+    return render(request, 'cadastro/projeto/projeto_tramitacoes.html', {'form1': form_proj, 'form2': form_tram})
+
+
+#### TIPO REUNIAO #######################################################################################################
 
 class TipoReuniaoListView(LoginRequiredMixin, ListView):
     template_name = "cadastro/tiporeuniao/tiporeuniao_listagem.html"
@@ -148,7 +159,8 @@ class TipoReuniaoDeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'tiporeuniao'
     success_url = reverse_lazy("lista_tiposreunioes")
 
-###########################
+
+#### COMISSÃO #######################
 
 class ComissaoListView(LoginRequiredMixin, ListView):
     template_name = "cadastro/comissao/comissao_listagem.html"
@@ -181,7 +193,8 @@ class ComissaoUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'comissao'
     success_url = reverse_lazy("lista_comissoes")
 
-###########################
+
+##### DEPUTADOS ######################
 
 class DeputadoListView(LoginRequiredMixin, ListView):
     template_name = "cadastro/deputado/deputado_listagem.html"

@@ -34,6 +34,7 @@ class ProjetoForm(forms.ModelForm):
         'ementa': forms.Textarea(attrs={"rows":3, "cols":10}),
     }
 
+
 class ControleReuniaoForm(forms.ModelForm):
   class Meta:
     model = ControleReuniao
@@ -68,8 +69,8 @@ class ControleReuniaoForm(forms.ModelForm):
 class TramitacaoForm(forms.ModelForm):
   class Meta:
     model = Tramitacao
-    fields = ["data_tramitacao", "data_atualizacao",]
-    labels = {"data_tramitacao": "Data da Tramitacao", "data_atualizacao": "Última Atualização",}
+    fields = ["projeto", "comissao", "descricao", "observacao", "data_tramitacao", "data_atualizacao",]
+    labels = {"projeto": "Projeto", "comissao" : "Comissão", "descricao": "Descrição", "observacao": "Observação", "data_tramitacao": "Data da Tramitacao", "data_atualizacao": "Última Atualização",}
 
 
 #  descricao = forms.CharField(

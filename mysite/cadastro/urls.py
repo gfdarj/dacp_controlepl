@@ -44,6 +44,7 @@ urlpatterns = [
     path('projetos/', ProjetoListView.as_view(), name="lista_projetos"),  # LISTA
     path('projetoinsere/', ProjetoCreateView.as_view(), name='projeto_insere'),  # INSERE
     path('projetoedita/<int:pk>', ProjetoUpdateView.as_view(), name='projeto_edita'),  # EDITA
+    path('projetotramitacoes/<int:pk>', views.ProjetoTramitacoes, name='projeto_tramitacoes'),  # EDITA
     path('projetoexcluir/<int:pk>', ProjetoDeleteView.as_view(), name='projeto_excluir'),  # EXCLUI
 
     path('tramitacoes/<int:pk>', TramitacaoListView.as_view(), name="lista_tramitacoes"),  # LISTA
